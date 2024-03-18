@@ -8,5 +8,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TouchInteraction.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
+  - enabled: 1
+    path: Assets/Scenes/Particles.unity
+    guid: c68c8cba5f7a9fd47a157d8da3014544
+  - enabled: 1
+    path: Assets/Scenes/Spectrogram.unity
+    guid: cda13eceadd099b4d99258e967543a17
+  - enabled: 1
+    path: Assets/Scenes/Waveform.unity
+    guid: fa418f18dee926f408ab5ad62c58d2c3
+  - enabled: 1
+    path: Assets/Scenes/Lissajous.unity
+    guid: 6732a15a669195241841b3ef90f23f74
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

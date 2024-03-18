@@ -84,7 +84,7 @@ public class TouchInputManager : MonoBehaviour
         }
 
         // Quit Function
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
             QuitApplication();
         }
