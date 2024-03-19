@@ -10,9 +10,6 @@ using DG.Tweening;
 
 public class TouchManager : MonoBehaviour
 {
-    // public Camera cam;
-    // public LayerMask ignoreLayer;
-
     // Reference switch scene script
     public SwitchScenes switchScenes; 
 
@@ -49,7 +46,7 @@ public class TouchManager : MonoBehaviour
         vfxPanelRect = vfxPanel.GetComponent<RectTransform>();
         vfxPanelPos = vfxPanelRect.anchoredPosition.x;
         
-        // Panel Placements
+        // Initialize Panel settings
         vfxPanel.SetActive(true);
         vfxPanelRect.DOAnchorPosX(-vfxPanelPos, .01f);
     }
@@ -74,10 +71,6 @@ public class TouchManager : MonoBehaviour
             durationVFXText.text = "Duration: " + vfxDurationSlider.value + " seconds";
         }
     }
-
-    // bool IsPointerOverUI() {
-    //     return EventSystem.current.IsPointerOverGameObject();
-    // }
 
     GameObject InstantiateVFX(Vector3 position, int vfxIndex) {
         GameObject vfxPrefab = vfxPrefabs[vfxIndex];

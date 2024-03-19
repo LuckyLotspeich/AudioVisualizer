@@ -20,11 +20,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   intensity:
-    m_OverrideState: 1
-    m_Value: 0.7
+    m_OverrideState: 0
+    m_Value: 0.053
   scatter:
-    m_OverrideState: 1
-    m_Value: 0.8
+    m_OverrideState: 0
+    m_Value: 0.039
   tint:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Value: {fileID: 0}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.142
   m_MaxSamples:
     m_OverrideState: 0
     m_Value: 6
@@ -196,7 +196,7 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 2.75
+    m_Value: 0.21
   contrast:
     m_OverrideState: 0
     m_Value: 0

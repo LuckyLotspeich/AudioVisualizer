@@ -37,7 +37,6 @@ public class SwitchScenes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Camera Initialized
         cam = Camera.main;
 
         // Scene Index Values
@@ -45,26 +44,22 @@ public class SwitchScenes : MonoBehaviour
         totalScenes = SceneManager.sceneCountInBuildSettings;
         maxSceneIndex = totalScenes - 1;
 
-        // Declaring Initial Positions
         scenePanelRect = scenePanel.GetComponent<RectTransform>();
         openUIButtonRect = openUIButton.GetComponent<RectTransform>();
-
-        // Assigning Initial Positions
         scenePanelPos = scenePanelRect.anchoredPosition.x;
         openUIButtonPos = openUIButtonRect.anchoredPosition.x;
 
-        // Activating UI Elements
+        // Activating all elements in case they are turned off when editing in play mode
         scenePanel.SetActive(true);
         openUIButton.SetActive(true);
 
-        // Move the scenePanel offscreen
+        // Initial Animations to move which elements off screen
         scenePanelRect.DOAnchorPosX(-scenePanelPos, .01f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Touch Functionalty
         HandleTouchInput();
 
         // Open Panel here and switch scenes with similar ones too.
@@ -72,7 +67,6 @@ public class SwitchScenes : MonoBehaviour
             ToggleUI();
         }
 
-        // Open Panel here and switch scenes with similar ones too.
         if(Input.GetKeyUp(KeyCode.A)) {
             if (currentSceneIndex == 0) {
                 SceneManager.LoadScene(maxSceneIndex);  
@@ -124,16 +118,18 @@ public class SwitchScenes : MonoBehaviour
             scenePanelRect.DOAnchorPosX(scenePanelPos, tweenDuration);
             openUIButtonRect.DOAnchorPosX(-openUIButtonPos, tweenDuration);
             scenePanelisVisible = true;       
+            Cursor.visible = scenePanelisVisible;
         }
         else {
             scenePanelRect.DOAnchorPosX(-scenePanelPos, tweenDuration);
             openUIButtonRect.DOAnchorPosX(openUIButtonPos, tweenDuration);
             scenePanelisVisible = false;
+            Cursor.visible = scenePanelisVisible;
         }
     }
 
     public void SwitchScene(string Scene) {
-        Debug.Log("SceneSwitch was pressed");
+        // Debug.Log("SceneSwitch was pressed");
         SceneManager.LoadScene(Scene);
     }
 
