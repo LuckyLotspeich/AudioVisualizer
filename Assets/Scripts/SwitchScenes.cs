@@ -88,6 +88,10 @@ public class SwitchScenes : MonoBehaviour
             currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             Debug.Log(currentSceneIndex);
         }
+
+        if(Input.GetKeyUp(KeyCode.Q)) {
+            QuitApplication();
+        }
     }
 
     // Touch Functionality
