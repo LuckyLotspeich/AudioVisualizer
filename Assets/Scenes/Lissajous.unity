@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useDefaultDevice: 1
-  _deviceID: 
+  _deviceID: '{0.0.1.00000000}.{8fc350dc-e4a1-4600-b32c-9833a99e4d0b}'
   _channel: 1
   _filterType: 0
   _autoGain: 1
@@ -773,7 +773,7 @@ VisualEffect:
       m_Array: []
     m_Uint:
       m_Array:
-      - m_Value: 3200
+      - m_Value: 177
         m_Name: SampleCount
         m_Overridden: 1
       - m_Value: 4096
@@ -792,10 +792,10 @@ VisualEffect:
       - m_Value: {fileID: 315919248}
         m_Name: Waveform
         m_Overridden: 1
-      - m_Value: {fileID: 298777938}
+      - m_Value: {fileID: 0}
         m_Name: LeftWaveform
         m_Overridden: 1
-      - m_Value: {fileID: 859202491}
+      - m_Value: {fileID: 0}
         m_Name: RightWaveform
         m_Overridden: 1
     m_Bool:
