@@ -16,7 +16,7 @@ public class TouchManager : MonoBehaviour
     [Header("Test Objects")]
     public GameObject testGameObject;
     public TextMeshProUGUI screenSizeText;
-    public TextMeshProUGUI touchPositionText;    
+    //public TextMeshProUGUI touchPositionText;    
 
     [Header("VFXs")]
     public List<GameObject> vfxPrefabs = new List<GameObject>();
@@ -37,7 +37,9 @@ public class TouchManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        screenSizeText.text = "Screen Width: " + Screen.width.ToString();
+        // Test Objects
+        // screenSizeText.text = "Screen Width: " + Screen.width.ToString();
+
         vfxSelectionSlider.maxValue = vfxPrefabs.Count - 1;
         vfxDurationSlider.maxValue = vfxMaxDuration;
         UpdatevfxSelectionText();
@@ -49,6 +51,8 @@ public class TouchManager : MonoBehaviour
         // Initialize Panel settings
         vfxPanel.SetActive(true);
         vfxPanelRect.DOAnchorPosX(-vfxPanelPos, .01f);
+        Cursor.visible = vfxPanelisVisible;
+      
     }
 
     // Update is called once per frame
@@ -69,6 +73,30 @@ public class TouchManager : MonoBehaviour
         }
         else {
             durationVFXText.text = "Duration: " + vfxDurationSlider.value + " seconds";
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape)) {
+            if (switchScenes.scenePanelisVisible) {
+                vfxPanelRect.DOAnchorPosX(vfxPanelPos, switchScenes.tweenDuration);
+                vfxPanelisVisible = true;       
+            }
+            else {
+                vfxPanelRect.DOAnchorPosX(-vfxPanelPos, switchScenes.tweenDuration);
+                vfxPanelisVisible = false;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+            vfxSelectionSlider.value -= 1; 
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow)) {
+            vfxSelectionSlider.value += 1;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow)) {
+            vfxDurationSlider.value += 1; 
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow)) {
+            vfxDurationSlider.value -= 1;
         }
     }
 
@@ -101,6 +129,7 @@ public class TouchManager : MonoBehaviour
             switchScenes.openUIButtonRect.DOAnchorPosX(-switchScenes.openUIButtonPos, switchScenes.tweenDuration);
 
             vfxPanelisVisible = true;
+            Cursor.visible = vfxPanelisVisible;
 
             if (switchScenes.scenePanelisVisible) {
                 switchScenes.scenePanelRect.DOAnchorPosX(switchScenes.scenePanelPos, switchScenes.tweenDuration);
@@ -111,6 +140,7 @@ public class TouchManager : MonoBehaviour
             switchScenes.openUIButtonRect.DOAnchorPosX(switchScenes.openUIButtonPos, switchScenes.tweenDuration);
 
             vfxPanelisVisible = false;
+            Cursor.visible = vfxPanelisVisible;
 
             if (switchScenes.scenePanelisVisible) {
                 switchScenes.scenePanelRect.DOAnchorPosX(-switchScenes.scenePanelPos, switchScenes.tweenDuration);

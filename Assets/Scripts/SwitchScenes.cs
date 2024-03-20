@@ -54,6 +54,7 @@ public class SwitchScenes : MonoBehaviour
         openUIButton.SetActive(true);
 
         // Initial Animations to move which elements off screen
+        Cursor.visible = scenePanelisVisible;
         scenePanelRect.DOAnchorPosX(-scenePanelPos, .01f);
     }
 
@@ -92,6 +93,10 @@ public class SwitchScenes : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Q)) {
             QuitApplication();
         }
+
+        // if(Input.GetKeyUp(KeyCode.Space)) {
+
+        // }
     }
 
     // Touch Functionality

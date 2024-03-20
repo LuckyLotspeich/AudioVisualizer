@@ -45,7 +45,7 @@ public class TouchInputManager : MonoBehaviour
     // private bool scenePanelWasOpen = false;      Used with no animationss
     private bool mainUIPanelisVisible = false;
     private bool scenePanelisVisible = false;
-    private bool openUIButtonisVisible = true;
+    // private bool openUIButtonisVisible = true;
     
     // Start is called before the first frame update
     void Start()

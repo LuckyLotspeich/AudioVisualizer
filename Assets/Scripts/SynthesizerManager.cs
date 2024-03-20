@@ -1,23 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro;
-using UnityEngine.VFX;
-using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 public class SynthesizerManager : MonoBehaviour
-{   
+{
     public Camera cam;
 
-    [Header("Synth Settings")]
     public float bpm = 120f;
     // Used to track the time ingame
     public float beatInterval;
-    public float beatTimer; 
-    
+    public float beatTimer;
+    public float test1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +19,7 @@ public class SynthesizerManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         HandleTouchInput();
         // If keys are pressed.
         if(Input.GetKeyUp(KeyCode.Q)) {
@@ -37,7 +30,7 @@ public class SynthesizerManager : MonoBehaviour
         if (beatTimer >= beatInterval)
         {
             beatTimer -= beatInterval;
-            ToggleInstrument();
+            // Activate my instument sounds here
         }
     }
 
@@ -54,4 +47,10 @@ public class SynthesizerManager : MonoBehaviour
         }
         return null;
     }
+
+    public void QuitApplication() {
+        Application.Quit();
+    }
+
+
 }
