@@ -13,6 +13,7 @@ public class SwitchScenes : MonoBehaviour
 {
     public Camera cam;
     public LayerMask ignoreLayer;
+    
 
     [Header("UI Elements")]
     public GameObject openUIButton;
@@ -33,6 +34,9 @@ public class SwitchScenes : MonoBehaviour
     private int currentSceneIndex;
     private int maxSceneIndex;
     private int totalScenes;
+    public static bool autoSwitchScenes = false;
+    public float sceneSwitchTimer = 0f;
+    public float sceneSwitchInterval = 30f;
 
     // Start is called before the first frame update
     void Start()
@@ -64,11 +68,11 @@ public class SwitchScenes : MonoBehaviour
         HandleTouchInput();
 
         // Open Panel here and switch scenes with similar ones too.
-        if(Input.GetKeyUp(KeyCode.Escape)) {
+        if (Input.GetKeyUp(KeyCode.Escape)) {
             ToggleUI();
         }
 
-        if(Input.GetKeyUp(KeyCode.A)) {
+        if (Input.GetKeyUp(KeyCode.A)) {
             if (currentSceneIndex == 0) {
                 SceneManager.LoadScene(maxSceneIndex);  
             }
@@ -79,7 +83,7 @@ public class SwitchScenes : MonoBehaviour
             Debug.Log(currentSceneIndex);
         }
 
-        if(Input.GetKeyUp(KeyCode.D)) {
+        if (Input.GetKeyUp(KeyCode.D)) {
             if (currentSceneIndex ==  maxSceneIndex) {
                 SceneManager.LoadScene(0);
             }
@@ -90,13 +94,24 @@ public class SwitchScenes : MonoBehaviour
             Debug.Log(currentSceneIndex);
         }
 
-        if(Input.GetKeyUp(KeyCode.Q)) {
+        if (Input.GetKeyUp(KeyCode.Q)) {
             QuitApplication();
         }
 
-        // if(Input.GetKeyUp(KeyCode.Space)) {
+        if (autoSwitchScenes) {
+            sceneSwitchTimer += Time.deltaTime;
 
-        // }
+            if (sceneSwitchTimer >= sceneSwitchInterval) {
+                int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+                if (nextSceneIndex < SceneManager.sceneCountInBuildSettings) {
+                    SceneManager.LoadScene(nextSceneIndex);
+                }
+                else {
+                    SceneManager.LoadScene(2);
+                }
+            }
+        }
     }
 
     // Touch Functionality
@@ -140,6 +155,10 @@ public class SwitchScenes : MonoBehaviour
     public void SwitchScene(string Scene) {
         // Debug.Log("SceneSwitch was pressed");
         SceneManager.LoadScene(Scene);
+    }
+
+    public void AutoSwitchScenes() {
+        autoSwitchScenes = !autoSwitchScenes;
     }
 
     public void QuitApplication() {

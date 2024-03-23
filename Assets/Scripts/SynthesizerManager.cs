@@ -12,10 +12,10 @@ using DG.Tweening;
 public class SynthesizerManager : MonoBehaviour
 {
     public static SynthesizerManager Instance;
-    public SequencerInstrument SequencerInstrument;
+    // public SequencerInstrument SequencerInstrument;
     public Camera cam;
 
-    [Header("Test")]
+    // [Header("Test")]
     public TextMeshProUGUI screenSizeText;
 
     [Header("UI")]
@@ -24,14 +24,18 @@ public class SynthesizerManager : MonoBehaviour
 
     [Header("Instruments")]
     public List<SequencerInstrument> instruments = new List<SequencerInstrument>();
+
+    [Header("Beat")]
     public float bpm = 60f;
-    // Used to track the time ingame
+    public int bpmStepSize = 2;
     private float beatInterval;
     private float beatTimer;
     private int currentBeatIndex = 0;
+    private List<Renderer> beatLightsRenderers = new List<Renderer>();
+    public Material beatLightOn;
+    public Material beatLightOff;
 
-    private void Awake()
-    {
+    private void Awake() {
         if (Instance == null) {
             Instance = this;
             Debug.Log("Instance is this");
@@ -42,8 +46,7 @@ public class SynthesizerManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         // Test Values
         screenSizeText.text = "Screen Width: " + Screen.width.ToString();
 
@@ -51,6 +54,19 @@ public class SynthesizerManager : MonoBehaviour
         SequencerInstrument[] sequencerInstruments = GetComponentsInChildren<SequencerInstrument>();
         instruments.AddRange(sequencerInstruments);
 
+        // Select all the beat lights
+        Transform beatTimer = transform.Find("BeatTimer");
+
+        if (beatTimer != null) {
+            Renderer[] beatLightsRends = beatTimer.GetComponentsInChildren<Renderer>();
+
+            // Can use this value for seeing how many notes are for each instrument too
+            foreach (Renderer renderer in beatLightsRends) {  
+                beatLightsRenderers.Add(renderer);
+            }
+        }
+       
+        // Get sequences added
         GameObject sequencerManagerObject = GameObject.Find("SequencerManager");
 
         if (sequencerManagerObject != null) {
@@ -67,9 +83,6 @@ public class SynthesizerManager : MonoBehaviour
                 }
             }
         }
-
-
-
         CalculateBeatInterval();
     }
 
@@ -87,8 +100,13 @@ public class SynthesizerManager : MonoBehaviour
         {
             // This is where the beat occurs! Ba-dum!
             beatTimer -= beatInterval;
+            UpdateBeatLights();
             ActivateNotes();
             currentBeatIndex++;
+
+            if (currentBeatIndex >= beatLightsRenderers.Count) {
+                currentBeatIndex = 0;
+            }
         }
     }
 
@@ -112,19 +130,28 @@ public class SynthesizerManager : MonoBehaviour
 
     public void UpdateBPM() {
         int newBPM = (int)bpmSlider.value;
+        newBPM = (int)(newBPM / bpmStepSize) * bpmStepSize;
         bpm = newBPM;
         CalculateBeatInterval();
         bpmText.text = "BPM: " + bpm;
+    }
+
+    public void UpdateBeatLights() {
+        beatLightsRenderers[currentBeatIndex].material = beatLightOn;
+        Debug.Log(currentBeatIndex);
+        
+        if (currentBeatIndex == 0) {
+            beatLightsRenderers[beatLightsRenderers.Count - 1 ].material = beatLightOff;
+        }
+        else {
+            beatLightsRenderers[currentBeatIndex - 1].material = beatLightOff;
+        }
     }
 
     public void ActivateNotes() {
         foreach (SequencerInstrument instrument in instruments) {
             List<bool> activeNoteStates = instrument.GetActiveNoteStates();
 
-            if (currentBeatIndex >= activeNoteStates.Count) {
-                currentBeatIndex = 0;
-            }
-            
             if (currentBeatIndex >= 0 && currentBeatIndex < activeNoteStates.Count) {   
                 if (activeNoteStates[currentBeatIndex]) {
                     instrument.PlaySound();
@@ -137,9 +164,15 @@ public class SynthesizerManager : MonoBehaviour
         }
     }
 
+    public void PlayPauseToggle() {
+        
+    }
+
     public void QuitApplication() {
         Application.Quit();
     }
+
+
 
 
 }

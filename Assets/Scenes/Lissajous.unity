@@ -314,6 +314,140 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1256716764
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9012009136462349355}
+    m_Modifications:
+    - target: {fileID: 1526754746569175645, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneSwitcherToggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6118575750056192928, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7854045585894599141}
+    - target: {fileID: 6118575750056192928, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AutoSwitchScenes
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 103.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 135.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17fed589527da454ea34587bbf4e65da, type: 3}
+--- !u!224 &1256716765 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7784809739001954697, guid: 17fed589527da454ea34587bbf4e65da,
+    type: 3}
+  m_PrefabInstance: {fileID: 1256716764}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1408209790
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,7 +907,7 @@ VisualEffect:
       m_Array: []
     m_Uint:
       m_Array:
-      - m_Value: 148
+      - m_Value: 3200
         m_Name: SampleCount
         m_Overridden: 1
       - m_Value: 4096
@@ -792,10 +926,10 @@ VisualEffect:
       - m_Value: {fileID: 315919248}
         m_Name: Waveform
         m_Overridden: 1
-      - m_Value: {fileID: 887423647}
+      - m_Value: {fileID: 0}
         m_Name: LeftWaveform
         m_Overridden: 1
-      - m_Value: {fileID: 806078620}
+      - m_Value: {fileID: 0}
         m_Name: RightWaveform
         m_Overridden: 1
     m_Bool:
@@ -3191,6 +3325,8 @@ MonoBehaviour:
   openUIButtonRect: {fileID: 4270790976706035790}
   scenePanelisVisible: 0
   openUIButtonisVisible: 1
+  sceneSwitchTimer: 0
+  sceneSwitchInterval: 30
 --- !u!222 &7859150507715179100
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3541,6 +3677,7 @@ RectTransform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1256716765}
   - {fileID: 569439854377640640}
   - {fileID: 1224501634036014262}
   - {fileID: 4755952068609768555}
