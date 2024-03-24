@@ -16,16 +16,21 @@ public class SequencerInstrument : MonoBehaviour
     public SynthesizerManager SynthesizerManager; 
 
     [Header("Materials")]
-    public Material toggleOnMat;
-    public Material toggleOffMat;
+    public Material noteOnMat;
+    public Material noteOffMat;
 
     [Header("Note States")]
     public List<NoteData> notesStates = new List<NoteData>();
 
-    [Header("Note")]
+    [Header("Audio Variables")]
     public AudioSource audioSource;
     public List<AudioClip> instrumentClips = new List<AudioClip>();
     // public AudioClip selectedInstrumentClip; 
+
+    [Header("Notes")]
+    public GameObject notePrefab;
+    // private List<GameObject> notes = new List<GameObject>();
+    private bool muteInstrument = false;
     
     [Header("UI")]
     public TextMeshProUGUI instrumentText;
@@ -82,12 +87,12 @@ public class SequencerInstrument : MonoBehaviour
                     Renderer renderer = note.GetComponent<Renderer>();
                     if (renderer != null) {
                         if (noteData.noteState) {
-                            renderer.material = toggleOnMat;
-                            Debug.Log("Is On");
+                            renderer.material = noteOnMat;
+                            // Debug.Log("Is On");
                         }
                         else {
-                            renderer.material = toggleOffMat;
-                            Debug.Log("Is Off");
+                            renderer.material = noteOffMat;
+                            // Debug.Log("Is Off");
                         }
                     }
                 }
@@ -101,7 +106,7 @@ public class SequencerInstrument : MonoBehaviour
                 return noteData;
             }
         }
-        Debug.Log("returning null");
+        // Debug.Log("returning null");
         return null;        
     }
 
@@ -135,7 +140,37 @@ public class SequencerInstrument : MonoBehaviour
     }
 
     public void PlaySound() {
-        audioSource.PlayOneShot(instrumentClips[(int)instrumentSlider.value]);
+        if (!muteInstrument) {
+            audioSource.PlayOneShot(instrumentClips[(int)instrumentSlider.value]);
+        }
+    }
+
+    public void AddNote() {
+        // Getting the transform of the last note
+        int lastIndex = notesStates.Count - 1;
+        NoteData lastNote = notesStates[lastIndex];
+        Transform lastNoteTransform = lastNote.note.transform;
+        Vector3 lastNotePosition = lastNoteTransform.position;
+        lastNotePosition.x += 1;
+
+        GameObject newNote = Instantiate(notePrefab, lastNotePosition, lastNoteTransform.rotation);
+
+        // Creating a new NoteData object for the new note's data
+        bool noteState = false; 
+        NoteData noteData = new NoteData(newNote, noteState);
+        notesStates.Add(noteData);
+    }
+
+    public void RemoveNote() {
+        int lastIndex = notesStates.Count - 1;
+        NoteData lastNote = notesStates[lastIndex];
+        Destroy(lastNote.note);
+        notesStates.RemoveAt(lastIndex);
+    }
+
+    // Is there a thing already in unity that is just mute already?
+    public void MuteInstrument() {
+        muteInstrument = !muteInstrument;
     }
 
     public void ResetNotes() {
@@ -144,15 +179,22 @@ public class SequencerInstrument : MonoBehaviour
             noteData.noteState = false;
             Renderer renderer = noteData.note.GetComponent<Renderer>();
             if (renderer != null) {
-                renderer.material = toggleOffMat; // Reset material to default off state
+                renderer.material = noteOffMat; // Reset material to default off state
             }
         }
     }
 
+    public void RemoveInstrument() {
+        SynthesizerManager.instruments.Remove(this);
+        Destroy(gameObject);
+        Vector3 addButtonPosition = SynthesizerManager.addInstrumentButton.transform.position;
+        addButtonPosition.y += SynthesizerManager.instrumentOffset;
+        SynthesizerManager.addInstrumentButton.transform.position = addButtonPosition;
+    }
+
 }
 
-public class NoteData
-{
+public class NoteData {
     public GameObject note;
     public bool noteState;
 

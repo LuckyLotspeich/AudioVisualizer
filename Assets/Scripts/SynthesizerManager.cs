@@ -12,33 +12,45 @@ using DG.Tweening;
 public class SynthesizerManager : MonoBehaviour
 {
     public static SynthesizerManager Instance;
+    public SynthesizerManager synthesizerManager; // This is used for the create instrument button
     // public SequencerInstrument SequencerInstrument;
     public Camera cam;
 
-    // [Header("Test")]
+    [Header("Test")]
     public TextMeshProUGUI screenSizeText;
-
-    [Header("UI")]
-    public TextMeshProUGUI bpmText;
-    public Slider bpmSlider;
 
     [Header("Instruments")]
     public List<SequencerInstrument> instruments = new List<SequencerInstrument>();
+    public GameObject instrumentPrefab;
 
-    [Header("Beat")]
+    [Header("Beat variables")]
     public float bpm = 60f;
     public int bpmStepSize = 2;
     private float beatInterval;
     private float beatTimer;
     private int currentBeatIndex = 0;
+    public bool pauseBPM = true;
+
+    [Header("Beat Timer")]
+    public GameObject beatPrefab;
+    public int maxNotes;
     private List<Renderer> beatLightsRenderers = new List<Renderer>();
     public Material beatLightOn;
     public Material beatLightOff;
 
+    [Header("UI Elements")]
+    public TextMeshProUGUI bpmText;
+    public Slider bpmSlider;
+    public Button playPauseButton;
+    public TextMeshProUGUI noteNumberText;
+    public Button addInstrumentButton;
+    public float instrumentOffset;
+    public RectTransform scrollContent;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
-            Debug.Log("Instance is this");
+            // Debug.Log("Instance is this");
         }
         else {
             Destroy(gameObject);
@@ -56,15 +68,13 @@ public class SynthesizerManager : MonoBehaviour
 
         // Select all the beat lights
         Transform beatTimer = transform.Find("BeatTimer");
+        Renderer[] beatLightsRends = beatTimer.GetComponentsInChildren<Renderer>();
 
-        if (beatTimer != null) {
-            Renderer[] beatLightsRends = beatTimer.GetComponentsInChildren<Renderer>();
-
-            // Can use this value for seeing how many notes are for each instrument too
-            foreach (Renderer renderer in beatLightsRends) {  
-                beatLightsRenderers.Add(renderer);
-            }
+        // Can use this value for seeing how many notes are for each instrument too
+        foreach (Renderer renderer in beatLightsRends) {  
+            beatLightsRenderers.Add(renderer);
         }
+        noteNumberText.text = beatLightsRenderers.Count + " Notes";
        
         // Get sequences added
         GameObject sequencerManagerObject = GameObject.Find("SequencerManager");
@@ -83,7 +93,7 @@ public class SynthesizerManager : MonoBehaviour
                 }
             }
         }
-        CalculateBeatInterval();
+        UpdateBPM();
     }
 
     // Update is called once per frame
@@ -95,17 +105,19 @@ public class SynthesizerManager : MonoBehaviour
             QuitApplication();
         }
 
-        beatTimer += Time.deltaTime;
-        if (beatTimer >= beatInterval)
-        {
-            // This is where the beat occurs! Ba-dum!
-            beatTimer -= beatInterval;
-            UpdateBeatLights();
-            ActivateNotes();
-            currentBeatIndex++;
+        if (!pauseBPM) {
+            beatTimer += Time.deltaTime;
+            if (beatTimer >= beatInterval)
+            {
+                // This is where the beat occurs! Ba-dum!
+                beatTimer -= beatInterval;
+                UpdateBeatLights();
+                ActivateNotes();
+                currentBeatIndex++;
 
-            if (currentBeatIndex >= beatLightsRenderers.Count) {
-                currentBeatIndex = 0;
+                if (currentBeatIndex >= beatLightsRenderers.Count) {
+                    currentBeatIndex = 0;
+                }
             }
         }
     }
@@ -138,7 +150,7 @@ public class SynthesizerManager : MonoBehaviour
 
     public void UpdateBeatLights() {
         beatLightsRenderers[currentBeatIndex].material = beatLightOn;
-        Debug.Log(currentBeatIndex);
+        // Debug.Log(currentBeatIndex);
         
         if (currentBeatIndex == 0) {
             beatLightsRenderers[beatLightsRenderers.Count - 1 ].material = beatLightOff;
@@ -164,15 +176,113 @@ public class SynthesizerManager : MonoBehaviour
         }
     }
 
-    public void PlayPauseToggle() {
+    public void AddBeat() {
+        if (beatLightsRenderers.Count < maxNotes) {
+            Renderer lastRenderer = beatLightsRenderers[beatLightsRenderers.Count - 1];
+            Transform lastNote = lastRenderer.gameObject.transform;
+            Vector3 lastNotePosition = lastNote.position;
+            lastNotePosition.x += 1;
+            GameObject newNote = Instantiate(beatPrefab, lastNotePosition, lastNote.rotation);
+
+            Renderer newRenderer = newNote.GetComponent<Renderer>();
+            beatLightsRenderers.Add(newRenderer);
+
+            noteNumberText.text = beatLightsRenderers.Count + " Notes";
+
+            // Spawn in the notes for each instrument now
+            foreach (SequencerInstrument instrument in instruments) {
+                instrument.AddNote();
+            } 
+        }
+        else {
+            Debug.LogWarning("Maximum number of notes reached.");
+        }
+    }
+
+    public void RemoveBeat() {
+        if (beatLightsRenderers.Count > 1) {
+            Renderer lastRenderer = beatLightsRenderers[beatLightsRenderers.Count - 1];
+            beatLightsRenderers.Remove(lastRenderer);
+            Destroy(lastRenderer.gameObject);
+
+            noteNumberText.text = beatLightsRenderers.Count + " Notes";
+
+            // Remove the notes for each instrument now
+            foreach (SequencerInstrument instrument in instruments) {
+                instrument.RemoveNote();
+            } 
+        } 
+        else {
+            Debug.LogWarning("Cannot remove last note.");
+        }
+    }
+
+    public void AddInstrument() {
+        Transform newInstrumentTransform;
+
+        if (instruments.Count == 1) {
+            // Get transform of first instrument
+            SequencerInstrument firstInstrument = instruments[0];
+            newInstrumentTransform = firstInstrument.transform;
+        }
+        else {
+            // Get transform of last instrument
+            SequencerInstrument lastInstrument = instruments[instruments.Count - 1];
+            newInstrumentTransform = lastInstrument.transform;
+            
+        }
+
+        // Debug.Log("Instrument Count: " + instruments.Count);
+
+        // 
+        Vector3 newInstrumentPosition = newInstrumentTransform.position;
+        newInstrumentPosition.y -= instrumentOffset;
+
+        // Create the new instrument and assign values
+        GameObject newInstrument = Instantiate(instrumentPrefab, newInstrumentPosition, newInstrumentTransform.rotation, addInstrumentButton.transform.parent);
+        newInstrument.name = "Instrument";
+        instruments.Add(newInstrument.GetComponent<SequencerInstrument>());
+        SequencerInstrument sequencerInstrument = newInstrument.GetComponent<SequencerInstrument>();
+        sequencerInstrument.SynthesizerManager = synthesizerManager;
+
+        // Change the position and scale of other objects in the scene to match the number of instruments
+        // Vector2 newScrollPosY = scrollContent.sizeDelta;
+        // newScrollPosY.y += 1;
+        // // scrollContent.position = newScrollPosY;
+        // scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x, scrollContent.sizeDelta.y + instrumentOffset);
+        // Debug.Log("Scroll Content Size Delta: " + scrollContent.sizeDelta + "\n .y:" + newScrollPosY.y);
         
+
+        Vector3 addButtonPosition = addInstrumentButton.transform.position;
+        addButtonPosition.y -= instrumentOffset;
+        addInstrumentButton.transform.position = addButtonPosition;
+    }
+
+    public void PlayPauseToggle() {
+        // Changing from paused to play so making text pause because sound UI displays other state for play/pause
+        if (pauseBPM) {
+            playPauseButton.GetComponentInChildren<TMP_Text>().text = "Pause";
+            pauseBPM = false;
+        }
+        else {
+            playPauseButton.GetComponentInChildren<TMP_Text>().text = "Play";
+            pauseBPM = true;
+        }
+    }
+
+    public void MuteAllInstruments() {
+        foreach (SequencerInstrument instrument in instruments) {
+            instrument.MuteInstrument();
+        } 
+    }
+
+    public void ResetAllInstruments() {
+        foreach (SequencerInstrument instrument in instruments) {
+            instrument.ResetNotes();
+        } 
     }
 
     public void QuitApplication() {
         Application.Quit();
     }
-
-
-
-
 }
