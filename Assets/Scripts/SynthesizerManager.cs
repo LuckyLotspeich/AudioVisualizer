@@ -234,7 +234,6 @@ public class SynthesizerManager : MonoBehaviour
 
         // Debug.Log("Instrument Count: " + instruments.Count);
 
-        // 
         Vector3 newInstrumentPosition = newInstrumentTransform.position;
         newInstrumentPosition.y -= instrumentOffset;
 
@@ -245,17 +244,19 @@ public class SynthesizerManager : MonoBehaviour
         SequencerInstrument sequencerInstrument = newInstrument.GetComponent<SequencerInstrument>();
         sequencerInstrument.SynthesizerManager = synthesizerManager;
 
-        // Change the position and scale of other objects in the scene to match the number of instruments
-        // Vector2 newScrollPosY = scrollContent.sizeDelta;
-        // newScrollPosY.y += 1;
-        // // scrollContent.position = newScrollPosY;
-        // scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x, scrollContent.sizeDelta.y + instrumentOffset);
-        // Debug.Log("Scroll Content Size Delta: " + scrollContent.sizeDelta + "\n .y:" + newScrollPosY.y);
-        
+        scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x, scrollContent.sizeDelta.y + instrumentOffset);
 
         Vector3 addButtonPosition = addInstrumentButton.transform.position;
         addButtonPosition.y -= instrumentOffset;
         addInstrumentButton.transform.position = addButtonPosition;
+    }
+
+    public void MoveLowerInstruments(int removedInstrumentIndex) {
+        for (int i = removedInstrumentIndex; i < instruments.Count; i++) {
+            Vector3 movingInstrumentPosition = instruments[i].transform.position;
+            movingInstrumentPosition.y += instrumentOffset;
+            instruments[i].transform.position = movingInstrumentPosition;
+        }
     }
 
     public void PlayPauseToggle() {

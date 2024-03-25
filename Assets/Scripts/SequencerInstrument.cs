@@ -38,20 +38,14 @@ public class SequencerInstrument : MonoBehaviour
     public string noteTag;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         audioSource = GetComponent<AudioSource>();
 
-        // Automatically adds all the audio clips from the AudioClips folder into the list
-        string[] audioFilesPaths = AssetDatabase.FindAssets("t:AudioClip", new[] {"Assets/Audio/AudioClips"});
+        // Automatically adds all the audio clips from the AudioClips folder located in Assets/Resourcesinto the list
+        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("AudioClips");
 
-        foreach (var audioFilePath in audioFilesPaths) {
-            string path = AssetDatabase.GUIDToAssetPath(audioFilePath);
-            AudioClip audioFile = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
-            if (audioFile != null) {
-                instrumentClips.Add(audioFile);
-            }
-            
+        foreach (var audioClip in audioClips) {
+            instrumentClips.Add(audioClip);
         }
 
         // Adjusts the slider and updates it
@@ -185,11 +179,15 @@ public class SequencerInstrument : MonoBehaviour
     }
 
     public void RemoveInstrument() {
+        int index = SynthesizerManager.instruments.IndexOf(this);
         SynthesizerManager.instruments.Remove(this);
         Destroy(gameObject);
         Vector3 addButtonPosition = SynthesizerManager.addInstrumentButton.transform.position;
         addButtonPosition.y += SynthesizerManager.instrumentOffset;
         SynthesizerManager.addInstrumentButton.transform.position = addButtonPosition;
+
+        SynthesizerManager.MoveLowerInstruments(index);
+        // Debug.Log(index);
     }
 
 }
