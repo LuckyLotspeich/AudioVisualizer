@@ -1197,6 +1197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3096705297067017467}
   - component: {fileID: 3737832376903390283}
+  - component: {fileID: 3737832376903390284}
   m_Layer: 0
   m_Name: SwitchScenes
   m_TagString: Untagged
@@ -2347,6 +2348,18 @@ MonoBehaviour:
   openUIButtonisVisible: 1
   sceneSwitchTimer: 0
   sceneSwitchInterval: 30
+--- !u!114 &3737832376903390284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019273869213231057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e518ed2a4c477b458fad6c66933f6b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3864529106160708302
 Transform:
   m_ObjectHideFlags: 0

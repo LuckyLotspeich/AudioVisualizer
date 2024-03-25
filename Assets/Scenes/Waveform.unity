@@ -211,7 +211,7 @@ VisualEffect:
       m_Array: []
     m_Uint:
       m_Array:
-      - m_Value: 3200
+      - m_Value: 209
         m_Name: SampleCount
         m_Overridden: 1
       - m_Value: 4096
@@ -832,6 +832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2551047209389008924}
   - component: {fileID: 4197887404669270188}
+  - component: {fileID: 4197887404669270189}
   m_Layer: 0
   m_Name: SwitchScenes
   m_TagString: Untagged
@@ -2490,6 +2491,18 @@ MonoBehaviour:
   openUIButtonisVisible: 1
   sceneSwitchTimer: 0
   sceneSwitchInterval: 30
+--- !u!114 &4197887404669270189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557222370833124150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e518ed2a4c477b458fad6c66933f6b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4201212361375806361
 GameObject:
   m_ObjectHideFlags: 0

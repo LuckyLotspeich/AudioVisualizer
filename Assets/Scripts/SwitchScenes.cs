@@ -8,12 +8,10 @@ using UnityEngine.VFX;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
-
 public class SwitchScenes : MonoBehaviour
 {
     public Camera cam;
     public LayerMask ignoreLayer;
-    
 
     [Header("UI Elements")]
     public GameObject openUIButton;
@@ -68,34 +66,8 @@ public class SwitchScenes : MonoBehaviour
         HandleTouchInput();
 
         // Open Panel here and switch scenes with similar ones too.
-        if (Input.GetKeyUp(KeyCode.Escape)) {
+        if (Input.GetKeyUp(KeyCode.Space)) {
             ToggleUI();
-        }
-
-        if (Input.GetKeyUp(KeyCode.A)) {
-            if (currentSceneIndex == 0) {
-                SceneManager.LoadScene(maxSceneIndex);  
-            }
-            else {
-                SceneManager.LoadScene(currentSceneIndex - 1);
-            }
-            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            Debug.Log(currentSceneIndex);
-        }
-
-        if (Input.GetKeyUp(KeyCode.D)) {
-            if (currentSceneIndex ==  maxSceneIndex) {
-                SceneManager.LoadScene(0);
-            }
-            else {
-                SceneManager.LoadScene(currentSceneIndex + 1);
-            }
-            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            Debug.Log(currentSceneIndex);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Q)) {
-            QuitApplication();
         }
 
         if (autoSwitchScenes) {
@@ -160,9 +132,4 @@ public class SwitchScenes : MonoBehaviour
     public void AutoSwitchScenes() {
         autoSwitchScenes = !autoSwitchScenes;
     }
-
-    public void QuitApplication() {
-        Application.Quit();
-    }
-
 }
