@@ -393,8 +393,8 @@ MonoBehaviour:
   tweenDuration: 0.5
   scenePanelPos: 0
   openUIButtonPos: 0
-  scenePanelRect: {fileID: 0}
-  openUIButtonRect: {fileID: 0}
+  scenePanelRect: {fileID: 4416214011005239403}
+  openUIButtonRect: {fileID: 4662777149826536590}
   scenePanelisVisible: 0
   openUIButtonisVisible: 1
   sceneSwitchTimer: 0

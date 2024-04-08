@@ -318,7 +318,7 @@ MonoBehaviour:
   _useDefaultDevice: 1
   _deviceID: 
   _channel: 0
-  _resolution: 128
+  _resolution: 2048
   _autoGain: 1
   _gain: 0
   _dynamicRange: 60
@@ -729,7 +729,7 @@ VisualEffect:
       - m_Value: 512
         m_Name: SpectrumWidth
         m_Overridden: 1
-      - m_Value: 128
+      - m_Value: 2048
         m_Name: Resolution
         m_Overridden: 1
     m_Int:

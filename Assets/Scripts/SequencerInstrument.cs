@@ -48,9 +48,10 @@ public class SequencerInstrument : MonoBehaviour
             instrumentClips.Add(audioClip);
         }
 
-        // Adjusts the slider and updates it
+        // Adjusts the slider and updates it       // Adding this to manager
         instrumentSlider.maxValue = instrumentClips.Count - 1;
         UpdateSelectedInstrument();
+        SynthesizerManager.UpdateInitialInstruments();
 
         foreach (Transform child in transform) {
             if (child.CompareTag(noteTag)) {

@@ -93,6 +93,8 @@ public class SynthesizerManager : MonoBehaviour
                 }
             }
         }
+
+        // Update the instruments to have different sounds
         UpdateBPM();
     }
 
@@ -283,6 +285,18 @@ public class SynthesizerManager : MonoBehaviour
         } 
     }
 
+    public void UpdateInitialInstruments() {
+        int instrumentStartingValue = 0;
+        foreach (SequencerInstrument instrument in instruments) {
+            SequencerInstrument sequencerInstrument = instrument.GetComponent<SequencerInstrument>();
+            sequencerInstrument.instrumentSlider.value = instrumentStartingValue;
+            // sequencerInstrument.instrumentText.text = "test";
+
+            Debug.Log(instrumentStartingValue);
+            instrumentStartingValue++;
+        }
+    }
+    
     public void QuitApplication() {
         Application.Quit();
     }
